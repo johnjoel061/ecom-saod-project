@@ -30,6 +30,11 @@ const userSchema = new mongoose.Schema(
       zip: String,
       country: String,
     },
+    phone: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -43,3 +48,9 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
+
+userSchema.methods.comparePassword = async function (candidatePassword, userPassword) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+}
+
+export const User = mongoose.model("User", userSchema);
