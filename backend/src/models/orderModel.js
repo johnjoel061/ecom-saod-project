@@ -28,6 +28,39 @@ const orderItemSchema = new mongoose.Schema(
   { _id: false, timestamps: true }
 );
 
+const cancellationSchema = new mongoose.Schema(
+  {
+    reason: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
+  },
+  { _id: false }
+);
+
+const returnSchema = new mongoose.Schema(
+  {
+    reason: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
+  },
+  { _id: false }
+);
+
 const orderSchema = new mongoose.Schema(
   {
     user: {
