@@ -1,5 +1,24 @@
 import mongoose from "mongoose";
 
+const messageSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
+  },
+  { _id: false }
+);
+
 const supportSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,16 +54,17 @@ const supportSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   updatedAt: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
-
 supportSchema.pre("save", function (next) {
-    this.updatedAt = new Date();
-    next();
-})
+  this.updatedAt = new Date();
+  next();
+});
+
+export const Support = mongoose.model("Support", supportSchema);
