@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
+import { dbConnect } from "./src/utils/utils";
 
 dotenv.config();
-
+dbConnect();
 const app = express();
 
 const PORT = process.env.PORT || 8000;
