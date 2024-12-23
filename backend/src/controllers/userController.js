@@ -1,12 +1,10 @@
-import { User } from "../models/userModel";
+import { User }  from "../models/userModel.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import expressAsyncHandler from "express-async-handler";
 
 // @dest Register a new user
 // @router /api/users
 // @access Public
-
 
 export const registerUser = expressAsyncHandler(async (req, res) => {
     const {name, email, password} = req.body;
