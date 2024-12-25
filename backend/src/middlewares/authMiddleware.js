@@ -24,19 +24,21 @@ export const protect = async (req, res, next) => {
       // Log error for debugging
       console.error("Token verification failed:", error.message);
 
-      res.status(401).json({status: false, message: "No Token Attached to the Header"})
+      res
+        .status(401)
+        .json({ status: false, message: "No Token Attached to the Header" });
     }
   } else {
-    res.status(401).json({status: false, message: "Not Authorized"})
+    res.status(401).json({ status: false, message: "Not Authorized" });
   }
 };
-
 
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      res.status(403).json({status: false, message: "You don't have permission"})
-
+      res
+        .status(403)
+        .json({ status: false, message: "You don't have permission" });
     }
     next();
   };

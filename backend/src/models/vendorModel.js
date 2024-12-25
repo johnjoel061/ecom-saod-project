@@ -44,6 +44,10 @@ const vendorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    storeBanner: {
+      type: String,
+      required: true,
+    },
     isVerified: {
       type: Boolean,
       default: false,
