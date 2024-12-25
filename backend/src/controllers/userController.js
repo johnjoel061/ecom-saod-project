@@ -79,7 +79,8 @@ export const profile = expressAsyncHandler(async (req, res) => {
       email: user.email,
       role: user.role,
       phone: user.phone,
-      isActive: user.isActive
+      isActive: user.isActive,
+      token: generateToken(user._id),
     });
   } else{
     throw new Error("User Not Found! ");
@@ -90,10 +91,10 @@ export const profile = expressAsyncHandler(async (req, res) => {
 // @router /api/users/profile
 // @access Private
 export const updateProfile = expressAsyncHandler(async (req, res) => {
-  const { _id } = req.body;
+  const { _id } = req.user;
 
   // Find the user by ID
-  const user = await User.findOne(_id);
+  const user = await User.findById(_id);
   if (user){
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
@@ -103,7 +104,7 @@ export const updateProfile = expressAsyncHandler(async (req, res) => {
     user.address = req.body.address || user.address;
     user.phone = req.body.phone || user.phone;
 
-    const updateUser = await User.save()
+    const updateUser = await user.save()
      
     res.json({
       _id: user._id,
@@ -112,7 +113,7 @@ export const updateProfile = expressAsyncHandler(async (req, res) => {
       role: user.role,
       phone: user.phone,
       isActive: user.isActive,
-      address: user.address
+      address: user.address,
     });
   } else{
     throw new Error("User Not Found! ");

@@ -10,15 +10,23 @@ export const protect = async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      token = req.headers.authorization.split("")[1];
-      const decoded = jwt.verify(token.process.env.JWT_SECRET);
+      // Correct token extraction
+      token = req.headers.authorization.split(" ")[1];
+
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // Fetch user without password
       req.user = await User.findById(decoded.id).select("-password");
+
       next();
     } catch (error) {
+      // Log error for debugging
+      console.error("Token verification failed:", error.message);
+
       throw new AppError("Not Authorized", 401);
     }
-  }
-  if (!token) {
+  } else {
     throw new AppError("No Token Attached to the Header", 401);
   }
 };
