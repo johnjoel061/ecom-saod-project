@@ -6,6 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { errorHandler, notFoundErrorHandler } from "./src/middlewares/errorHandler.js";
 import userRouter from "./src/routes/userRoutes.js";
+import vendorRouter from "./src/routes/vendorRoutes.js";
 
 
 //Load Environment Variables from .env file
@@ -25,6 +26,7 @@ app.use(cors());
 
 // API Routes
 app.use("/api/user", userRouter);
+app.use("/api/vendor", vendorRouter);
 
 
 // Error Handler Middlewares

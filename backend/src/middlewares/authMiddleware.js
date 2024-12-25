@@ -24,10 +24,10 @@ export const protect = async (req, res, next) => {
       // Log error for debugging
       console.error("Token verification failed:", error.message);
 
-      throw new AppError("Not Authorized", 401);
+      res.status(401).json({status: false, message: "No Token Attached to the Header"})
     }
   } else {
-    throw new AppError("No Token Attached to the Header", 401);
+    res.status(401).json({status: false, message: "Not Authorized"})
   }
 };
 
@@ -35,7 +35,8 @@ export const protect = async (req, res, next) => {
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      throw new AppError("You don't have permissions", 403);
+      res.status(403).json({status: false, message: "You don't have permission"})
+
     }
     next();
   };

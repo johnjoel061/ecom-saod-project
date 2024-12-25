@@ -6,6 +6,7 @@ import { AppError } from "../middlewares/errorHandler.js";
 // @dest Register a new user
 // @router /api/users/login  
 // @access Public
+
 export const registerUser = expressAsyncHandler(async (req, res) => {
   const { name, email, password, phone } = req.body;
 
