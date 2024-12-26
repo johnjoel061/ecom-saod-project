@@ -1,5 +1,11 @@
 import express from "express";
-import { createProduct, deleteAProduct, getAllProducts, getAProductBySlug, updateAProduct } from "../controllers/productController";
+import {
+  createProduct,
+  deleteAProduct,
+  getAllProducts,
+  getAProductBySlug,
+  updateAProduct,
+} from "../controllers/productController.js";
 
 const productRouter = express.Router();
 
@@ -18,4 +24,4 @@ productRouter.put("/:id", updateAProduct);
 //Delete Product by ID Route
 productRouter.delete("/:id", deleteAProduct);
 
-export default productRouter;    
+export default productRouter;
