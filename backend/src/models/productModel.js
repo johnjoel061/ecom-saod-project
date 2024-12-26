@@ -73,7 +73,7 @@ const productSchema = new mongoose.Schema(
 );
 
 productSchema.pre("save", async function (next) {
-  this.slug = slugify(this.storeName.toLowerCase());
+  this.slug = slugify(this.name.toLowerCase());
   next();
 });
 
