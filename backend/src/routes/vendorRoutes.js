@@ -1,6 +1,6 @@
 import express from "express";
 import { protect } from "../middlewares/authMiddleware.js";
-import { createVendor, getVendorBySlug, getVendors, updateVendor } from "../controllers/vendorController.js";
+import { createVendor, deleteVendor, getVendorBySlug, getVendors, updateVendor } from "../controllers/vendorController.js";
 
 const vendorRouter = express.Router();
 
@@ -13,7 +13,10 @@ vendorRouter.get("/all", getVendors);
 //Get Vendor by slug Route
 vendorRouter.get("/:slug", getVendorBySlug);
 
-//Get Vendor by slug Route
-vendorRouter.put("", updateVendor);
+//Update Vendor by ID Route
+vendorRouter.put("/:id", updateVendor);
+
+//Delete Vendor by ID Route
+vendorRouter.delete("/:id", deleteVendor);
 
 export default vendorRouter;    

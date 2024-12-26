@@ -15,7 +15,7 @@ export const createVendor = expressAsyncHandler(async (req, res) => {
 });
 
 // @dest Get Vendor
-// @router /api/vendors/
+// @router /api/vendor/all
 // @access Public
 export const getVendors = expressAsyncHandler(async (req, res) => {
   try {
@@ -27,7 +27,7 @@ export const getVendors = expressAsyncHandler(async (req, res) => {
 });
 
 // @dest Get Vendor By Slug
-// @router /api/vendors/
+// @router /api/vendor/:slug
 // @access Public
 export const getVendorBySlug = expressAsyncHandler(async (req, res) => {
   try {
@@ -43,13 +43,36 @@ export const getVendorBySlug = expressAsyncHandler(async (req, res) => {
 
 
 // @dest Update Vendor 
-// @router /api/vendors/
+// @router /api/vendor/:id
 // @access Public
 export const updateVendor = expressAsyncHandler(async (req, res) => {
    try {
      const vendor = await Vendor.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
      });
+
+     if(!vendor){
+      throw new AppError("Vendor Not Found !", 404);
+      
+     }
+     res.status(201).json({ status: true, data: vendor });
+   } catch (error) {
+     throw new AppError(error, 400);
+   }
+ });
+
+
+// @dest Delete Vendor 
+// @router /api/vendor/
+// @access Public
+export const deleteVendor = expressAsyncHandler(async (req, res) => {
+   try {
+     const vendor = await Vendor.findByIdAndDelete(req.params.id);
+
+     if(!vendor){
+      throw new AppError("Vendor Not Found !", 404);
+      
+     }
      res.status(201).json({ status: true, data: vendor });
    } catch (error) {
      throw new AppError(error, 400);
