@@ -1,5 +1,4 @@
 import express from "express";
-import { protect } from "../middlewares/authMiddleware.js";
 import { createVendor, deleteVendor, getVendorBySlug, getVendors, updateVendor } from "../controllers/vendorController.js";
 
 const vendorRouter = express.Router();
