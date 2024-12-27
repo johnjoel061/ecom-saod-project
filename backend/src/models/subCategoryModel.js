@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
-import { brandSchema } from "./brandModel";
 
 const subcategorySchema = new mongoose.Schema(
   {
