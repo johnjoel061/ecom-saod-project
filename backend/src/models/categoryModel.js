@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 const categorySchema = new mongoose.Schema(
   {
@@ -8,18 +9,21 @@ const categorySchema = new mongoose.Schema(
       unique: true,
     },
     description: String,
-    parenCategory: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-    },
+    slug: String,
+
     subCategory: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
+        ref: "SubCategory",
       },
     ],
   },
   { timestamps: true }
 );
+
+categorySchema.pre("save", async function (next) {
+  this.slug = slugify(this.name.toLowerCase());
+  next();
+}); 
 
 export const Category = mongoose.model("Category", categorySchema);
