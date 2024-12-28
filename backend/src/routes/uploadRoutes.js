@@ -6,6 +6,6 @@ const uploadRouter = express.Router();
 
 const upload = multer({ dest: "uploads/" });
 
-uploadRouter.post("/upload", upload.single("file"), uploadFile);
+uploadRouter.post("/upload-file", upload.single("file"), uploadFile);
 
 export default uploadRouter;
