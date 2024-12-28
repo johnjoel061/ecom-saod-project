@@ -3,7 +3,7 @@ import {
   createWishlist,
   deleteAWishlist,
   getAllWishlists,
-  getAWishlistBySlug,
+  getAWishlistById,
   updateAWishlist,
 } from "../controllers/wishlistController.js";
 
@@ -16,7 +16,7 @@ wishlistRouter.post("/", createWishlist);
 wishlistRouter.get("/all", getAllWishlists);
 
 //Get Wishlist by slug Route
-wishlistRouter.get("/:slug", getAWishlistBySlug);
+wishlistRouter.get("/:id", getAWishlistById);
 
 //Update Wishlist by ID Route
 wishlistRouter.put("/:id", updateAWishlist);
