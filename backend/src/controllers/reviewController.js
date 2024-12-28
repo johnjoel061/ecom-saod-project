@@ -39,7 +39,7 @@ export const getAReviewById = expressAsyncHandler(async (req, res) => {
   }
 });
 
-// @dest Update a Review 
+// @dest Update a Review
 // @router /api/review/:id
 // @access Public
 export const updateAReview = expressAsyncHandler(async (req, res) => {
@@ -56,7 +56,7 @@ export const updateAReview = expressAsyncHandler(async (req, res) => {
   }
 });
 
-// @dest Delete a Review 
+// @dest Delete a Review
 // @router /api/review/:id
 // @access Public
 export const deleteAReview = expressAsyncHandler(async (req, res) => {
@@ -65,24 +65,31 @@ export const deleteAReview = expressAsyncHandler(async (req, res) => {
     if (!review) {
       throw new AppError("Review Not Found !", 404);
     }
-    res.status(201).json({ status: true, message: "Review Deleted Successfully" });
+    res
+      .status(201)
+      .json({ status: true, message: "Review Deleted Successfully" });
   } catch (error) {
     throw new AppError(error, 400);
   }
 });
 
-
-// @dest Delete a Review 
-// @router /api/review/:id
+// @dest Update is Approved
+// @router /api/review/approved-request
 // @access Public
-export const deleteAReview = expressAsyncHandler(async (req, res) => {
-    try {
-      const review = await Review.findByIdAndDelete(req.params.id);
-      if (!review) {
-        throw new AppError("Review Not Found !", 404);
-      }
-      res.status(201).json({ status: true, message: "Review Deleted Successfully" });
-    } catch (error) {
-      throw new AppError(error, 400);
+export const approveAReview = expressAsyncHandler(async (req, res) => {
+  try {
+    const review = await Review.findByIdAndUpdate(
+      req.params.id,
+      { isApproved: req.body.isApproved },
+      { new: true }
+    );
+    if (!review) {
+      throw new AppError("Review Not Found !", 404);
     }
-  });
+    res
+      .status(201)
+      .json({ status: true, message: "Review Updated Successfully" });
+  } catch (error) {
+    throw new AppError(error, 400);
+  }
+});
