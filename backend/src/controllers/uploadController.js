@@ -1,5 +1,5 @@
 import https from "https";
-import fs from "fs";
+import fs, { accessSync } from "fs";
 import expressAsyncHandler from "express-async-handler";
 
 const BASE_HOSTNAME = "storage.bunnycdn.com";
@@ -86,4 +86,25 @@ export const uploadFile = expressAsyncHandler(async (req, res) => {
   });
 
   readStream.pipe(reqBunny);
+});
+
+export const deleteFile = expressAsyncHandler(async (req, res) => {
+  const url = `https://${HOSTNAME}/${STORAGE_ZONE_NAME}/${req.params.fileName}`;
+  const options = {
+    method: "DELETE",
+    headers: { AccessKey: ACCESS_KEY },
+  };
+  try {
+    const response = await fetch(url, options);
+    if (response.ok) {
+      res.status(200).json({ status: true, msg: "File Deleted Successfully" });
+    } else {
+      const errorText = await response.text();
+      res
+        .status(response.status)
+        .json({ status: false, msg: `Error in deleting file : ${errorText}` });
+    }
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "Error in deleting file" });
+  }
 });
