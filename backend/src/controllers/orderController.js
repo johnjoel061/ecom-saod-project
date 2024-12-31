@@ -105,7 +105,7 @@ export const updateOrderStatus = expressAsyncHandler(async (req, res) => {
 // @dest Handle Order Cancellation
 // @router /api/order/
 // @access Private
-export const handleOrderCancellation = expressAsyncHandler(async (req, res) => {
+export const handleOrderReturn = expressAsyncHandler(async (req, res) => {
     try {
       const { reason } = req.body;
       const order = await Order.findByIdAndUpdate(
