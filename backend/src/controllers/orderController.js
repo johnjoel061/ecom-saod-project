@@ -19,12 +19,16 @@ export const createOrder = expressAsyncHandler(async (req, res) => {
 // @dest get all Order
 // @router /api/order/
 // @access Private
-export const getAllOrder = expressAsyncHandler(async (req, res) => {
+export const getAllOrders = expressAsyncHandler(async (req, res) => {
     try {
-      const order = new Order(req.body);
+      const order = await Order.find().populate("user items.product");
       await order.save();
       res.status(201).json({ status: true, data: order });
     } catch (error) {
       throw new AppError(error);
     }
   });
+
+// @dest get a Single Order
+// @router /api/order/
+// @access Private
