@@ -78,7 +78,6 @@ export const deleteAOrder = expressAsyncHandler(async (req, res) => {
   }
 });
 
-
 // @dest update a Order Status
 // @router /api/order/
 // @access Private
@@ -101,26 +100,49 @@ export const updateOrderStatus = expressAsyncHandler(async (req, res) => {
   }
 });
 
-
-// @dest Handle Order Cancellation
+// @dest Handle Order Return
 // @router /api/order/
 // @access Private
 export const handleOrderReturn = expressAsyncHandler(async (req, res) => {
-    try {
-      const { reason } = req.body;
-      const order = await Order.findByIdAndUpdate(
-        req.params.id,
-        { status: "cancelled", cancellation: {reason, createdAt: new Date()}},
-        { new: true }
-      );
-      if (!order) {
-        return res
-          .status(400)
-          .json({ status: false, message: "Order Not Found!" });
-      }
-      res.status(201).json({ status: true, message: "Order Deleted!" });
-    } catch (error) {
-      throw new AppError(error);
+  try {
+    const { reason } = req.body;
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { return: { reason, status: "pending", createdAt: new Date() } },
+      { new: true }
+    );
+    if (!order) {
+      return res
+        .status(400)
+        .json({ status: false, message: "Order Not Found!" });
     }
-  });
-  
+    res.status(201).json({ status: true, message: "Order Deleted!" });
+  } catch (error) {
+    throw new AppError(error);
+  }
+});
+
+// @dest Handle Order Return
+// @router /api/order/
+// @access Private
+export const handleOrderReturnStatus = expressAsyncHandler(async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findByIdAndUpdate(
+      { _id: req.params.id, "return.status": "pending" },
+      { "return.status": status },
+      { new: true }
+    );
+    if (!order) {
+      return res
+        .status(400)
+        .json({
+          status: false,
+          message: "Order Not Found or return already processed!",
+        });
+    }
+    res.status(201).json({ status: true, message: "Order Deleted!" });
+  } catch (error) {
+    throw new AppError(error);
+  }
+});
