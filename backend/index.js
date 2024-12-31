@@ -16,8 +16,8 @@ import categoryRouter from "./src/routes/categoryRoutes.js";
 import subCategoryRouter from "./src/routes/subCategoryRoutes.js";
 import wishlistRouter from "./src/routes/wishlistRoutes.js";
 import reviewRouter from "./src/routes/reviewRoutes.js";
-import { uploadFile } from "./src/controllers/uploadController.js";
 import uploadRouter from "./src/routes/uploadRoutes.js";
+import orderRouter from "./src/routes/orderRoutes.js";
 
 //Load Environment Variables from .env file
 dotenv.config();
@@ -44,6 +44,7 @@ app.use("/api/subcategory", subCategoryRouter);
 app.use("/api/wishlist", wishlistRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/upload", uploadRouter);
+app.use("/api/order", orderRouter);
 
 // Error Handler Middlewares
 app.use(errorHandler);

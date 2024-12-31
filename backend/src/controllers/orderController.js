@@ -100,6 +100,28 @@ export const updateOrderStatus = expressAsyncHandler(async (req, res) => {
   }
 });
 
+// @dest update a Order Cancellation
+// @router /api/order/
+// @access Private
+export const handleOrderCancellation = expressAsyncHandler(async (req, res) => {
+  try {
+    const { reason } = req.body;
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { status: "cancelled", cancellation: {reason, createdAt: new Date()} },
+      { new: true }
+    );
+    if (!order) {
+      return res
+        .status(400)
+        .json({ status: false, message: "Order Not Found!" });
+    }
+    res.status(201).json({ status: true, message: "Order Deleted!" });
+  } catch (error) {
+    throw new AppError(error);
+  }
+});
+
 // @dest Handle Order Return
 // @router /api/order/
 // @access Private
