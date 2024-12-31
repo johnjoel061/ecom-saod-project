@@ -88,6 +88,7 @@ export const uploadFile = expressAsyncHandler(async (req, res) => {
   readStream.pipe(reqBunny);
 });
 
+
 export const deleteFile = expressAsyncHandler(async (req, res) => {
   const url = `https://${HOSTNAME}/${STORAGE_ZONE_NAME}/${req.params.fileName}`;
   const options = {
