@@ -70,3 +70,4 @@ export const deleteABrand = expressAsyncHandler(async (req, res) => {
     throw new AppError(error, 400);
   }
 });
+
